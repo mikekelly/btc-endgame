@@ -1,0 +1,123 @@
+version: "3.9"
+
+services:
+
+  runner:
+    build: runner
+    volumes:
+      - "./runner:/usr/src/app"
+    environment:
+      RED_NODE_URL: "http://red-node:8332"
+      BLUE_NODE_URL: "http://blue-node:8332"
+      JACK_NODE_URL: "http://jack-node:8332"
+      JILL_NODE_URL: "http://jill-node:8332"
+    networks:
+      - dmz
+      - default
+    command: bundle exec ruby load_the_jump_program.rb
+
+  explorer:
+    build: btc-rpc-explorer
+    ports:
+      - "3002:3002"
+    environment:
+      BTCEXP_HOST: explorer
+      BTCEXP_BITCOIND_HOST: blue-node
+      BTCEXP_BITCOIND_PORT: 8332
+      BTCEXP_BITCOIND_USER: satoshi
+      BTCEXP_BITCOIND_PASS: waswrong
+    networks:
+      - default
+      - dmz
+
+  red-node:
+    build: bitcoin
+    volumes:
+      - "./red-node-data:/root/.bitcoin"
+    command: bitcoind
+      -txindex
+      -printtoconsole
+      -loadblock=/root/.bitcoin/blocks/blk00000.dat
+      -wallet=redwallet
+      -addnode=blue-node:8333
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -rpcauth=satoshi:c0394c5b5db0bd5d1ee2ce7590125899$$7d2e0b6f839d5af1f4cd04a9e61fb6b0bb57cdc6dfe13d92b88ae008f1658e4a
+
+  red-miner:
+    build: cpuminer
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+    command:
+      --url=http://red-node:8332
+      -a sha256d
+      --coinbase-addr=bc1q8dl7zep5ynhpr7z0nh4lmvw6g2pxn73lxwumsu
+      --no-getwork
+      --user=satoshi
+      --pass=waswrong
+      --coinbase-sig=red-team
+
+  blue-node:
+    build: bitcoin
+    volumes:
+      - "./blue-node-data:/root/.bitcoin"
+    command: bitcoind
+      -txindex
+      -printtoconsole
+      -loadblock=/root/.bitcoin/blocks/blk00000.dat
+      -wallet=bluewallet
+      -addnode=red-node:8333
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -rpcauth=satoshi:c0394c5b5db0bd5d1ee2ce7590125899$$7d2e0b6f839d5af1f4cd04a9e61fb6b0bb57cdc6dfe13d92b88ae008f1658e4a
+
+  blue-miner:
+    build: cpuminer
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+    command:
+      --url=http://blue-node:8332
+      -a sha256d
+      --coinbase-addr=bc1qcmgxe4wac98wuj96we2uwcdm2syyedsz4tswph
+      --no-getwork
+      --user=satoshi
+      --pass=waswrong
+      --coinbase-sig=blue-team
+
+  jack-node:
+    build: bitcoin
+    volumes:
+      - "./jack-node-data:/root/.bitcoin"
+    command: bitcoind
+      -txindex
+      -printtoconsole
+      -loadblock=/root/.bitcoin/blocks/blk00000.dat
+      -wallet=bluewallet
+      -addnode=blue-node:8333
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -rpcauth=satoshi:c0394c5b5db0bd5d1ee2ce7590125899$$7d2e0b6f839d5af1f4cd04a9e61fb6b0bb57cdc6dfe13d92b88ae008f1658e4a
+
+  jill-node:
+    build: bitcoin
+    volumes:
+      - "./jill-node-data:/root/.bitcoin"
+    command: bitcoind
+      -txindex
+      -printtoconsole
+      -loadblock=/root/.bitcoin/blocks/blk00000.dat
+      -wallet=bluewallet
+      -addnode=blue-node:8333
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -rpcauth=satoshi:c0394c5b5db0bd5d1ee2ce7590125899$$7d2e0b6f839d5af1f4cd04a9e61fb6b0bb57cdc6dfe13d92b88ae008f1658e4a
+
+networks:
+  default:
+    internal: true
+  dmz:
+    driver: bridge

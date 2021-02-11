@@ -1,0 +1,6 @@
+[submodule "cpuminer"]
+	path = cpuminer
+	url = https://github.com/pooler/cpuminer
+[submodule "bitcoin"]
+	path = bitcoin
+	url = git@github.com:mikekelly/bitcoin.git
