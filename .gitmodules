@@ -1,6 +1,13 @@
-[submodule "cpuminer"]
-	path = cpuminer
-	url = https://github.com/pooler/cpuminer
 [submodule "bitcoin"]
 	path = bitcoin
 	url = git@github.com:mikekelly/bitcoin.git
+[submodule "cpuminer"]
+	path = cpuminer
+	url = git@github.com:pooler/cpuminer.git
+[submodule "evil-bitcoin"]
+	path = evil-bitcoin
+	url = git@github.com:mikekelly/bitcoin.git
+	branch = evilnode
+[submodule "btc-rpc-explorer"]
+	path = btc-rpc-explorer
+	url = git@github.com:mikekelly/btc-rpc-explorer.git

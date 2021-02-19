@@ -6,6 +6,7 @@ class BitcoinUser
   end
 
   def balance
+    raise "No session wallet available named #{session_wallet_name}" if session_wallet.nil?
     session_wallet.balance
   end
 
