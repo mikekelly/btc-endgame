@@ -25,7 +25,7 @@ end
 
 puts
 
-blue_team_balance = blue_team.balance
+blue_team_balance = blue_team.balance - 2 # hold 2 BTC back to cover fees
 amount_to_remit = (blue_team_balance/2).round(8)
 
 puts "Remitting #{amount_to_remit} to Jack..."

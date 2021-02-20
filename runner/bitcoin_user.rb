@@ -10,8 +10,8 @@ class BitcoinUser
     session_wallet.balance
   end
 
-  def send_to(user:, amount:, fee_rate: 10)
-    session_wallet.request('sendtoaddress', user.address, amount, "", "", true, true, nil, "unset", nil, fee_rate)
+  def send_to(user:, amount:, fee_rate: 1)
+    session_wallet.request('sendtoaddress', user.address, amount, "", "", false, true, nil, "unset", false, fee_rate)
   end
 
   def address
