@@ -40,8 +40,8 @@ puts
 puts "Waiting for Jack and Jill's funds to get confirmed..."
 loop do
   break if jack.balance > 0 && jill.balance > 0
-  puts "Rechecking their balances in 30s..."
-  sleep 30
+  puts "Rechecking their balances in 5s..."
+  sleep 5
 end
 
 puts
