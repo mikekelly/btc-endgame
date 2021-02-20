@@ -11,7 +11,7 @@ jill_node_url = ENV.fetch("JILL_NODE_URL")
 red_team = BitcoinUser.new(name: 'red_team', node_url: red_node_url, session_wallet_name: 'redwallet')
 blue_team = BitcoinUser.new(name: 'blue_team', node_url: blue_node_url, session_wallet_name: 'bluewallet')
 jack = BitcoinUser.new(name: 'jack', node_url: jack_node_url)
-jill = BitcoinUser.new(name: 'jill', node_url: jack_node_url)
+jill = BitcoinUser.new(name: 'jill', node_url: jill_node_url)
 
 puts "Jack's address for this session: #{jack.address}"
 puts "Jill's address for this session: #{jill.address}"
