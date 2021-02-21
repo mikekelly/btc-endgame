@@ -12,7 +12,6 @@ services:
       JACK_NODE_URL: "http://jack-node:8332"
       JILL_NODE_URL: "http://jill-node:8332"
     networks:
-      - dmz
       - default
     command: bundle exec ruby load_the_jump_program.rb
 
@@ -24,7 +23,6 @@ services:
       MIN_BLOCK_HEIGHT: 51 # this should be enough depth for blue-miner to confirm txn that funds jack and jill
       RED_NODE_URL: "http://red-node:8332"
     networks:
-      - dmz
       - default
     command: bundle exec ruby find_them_and_destroy_them.rb
 
