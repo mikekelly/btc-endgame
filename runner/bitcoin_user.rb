@@ -23,6 +23,18 @@ class BitcoinUser
     client.request("loadwallet", session_wallet_name)
   end
 
+  def update_bad_blocks
+    json = JSON.parse(Typhoeus.get('http://bad-block-politburo:4567/blocks').body)
+    json.fetch("banned_blocks", []).each do |block_hash|
+      begin
+        session_wallet.request 'invalidateblock', block_hash
+      rescue Bitcoiner::Client::JSONRPCError => e
+        puts "Error invalidating block #{block_hash}"
+        puts e.message
+      end
+    end
+  end
+
   def session_wallet
     if @session_wallet_name.nil?
       @session_wallet_name = SecureRandom.uuid

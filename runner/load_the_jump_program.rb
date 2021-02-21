@@ -3,12 +3,10 @@ require 'bitcoiner'
 require 'pry'
 require_relative './bitcoin_user'
 
-red_node_url = ENV.fetch("RED_NODE_URL")
 blue_node_url = ENV.fetch("BLUE_NODE_URL")
 jack_node_url = ENV.fetch("JACK_NODE_URL")
 jill_node_url = ENV.fetch("JILL_NODE_URL")
 
-red_team = BitcoinUser.new(name: 'red_team', node_url: red_node_url, session_wallet_name: 'redwallet')
 blue_team = BitcoinUser.new(name: 'blue_team', node_url: blue_node_url, session_wallet_name: 'bluewallet')
 jack = BitcoinUser.new(name: 'jack', node_url: jack_node_url)
 jill = BitcoinUser.new(name: 'jill', node_url: jill_node_url)
@@ -61,8 +59,6 @@ loop do
     jill.send_to(user: jack, amount: amount_to_exchange)
     puts "Done."
 
-    puts "They both wait 10 seconds..."
-    sleep 10
   rescue Bitcoiner::Client::JSONRPCError => e
     puts "RPC Error:"
     puts e.message
@@ -71,4 +67,13 @@ loop do
     puts "Reloading Jill's wallet"
     jill.reload_wallet
   end
+
+  puts "All comrades check in with the Bad Block Politburo..."
+
+  jack.update_bad_blocks
+  jill.update_bad_blocks
+  blue_team.update_bad_blocks
+
+  puts "They both wait 10 seconds..."
+  sleep 10
 end

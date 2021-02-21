@@ -7,13 +7,21 @@ services:
     volumes:
       - "./runner:/usr/src/app"
     environment:
-      RED_NODE_URL: "http://red-node:8332"
       BLUE_NODE_URL: "http://blue-node:8332"
       JACK_NODE_URL: "http://jack-node:8332"
       JILL_NODE_URL: "http://jill-node:8332"
+    command: bundle exec ruby load_the_jump_program.rb
+
+  bad-block-politburo:
+    build: bad-block-politburo
+    volumes:
+      - "./bad-block-politburo:/usr/src/app"
+    command: bundle exec ruby nobody_tell_nick_szabo_what_we_are_doing.rb
+    ports:
+      - "4567:4567"
     networks:
       - default
-    command: bundle exec ruby load_the_jump_program.rb
+      - dmz
 
   red-noc:
     build: red-noc
@@ -22,8 +30,6 @@ services:
     environment:
       MIN_BLOCK_HEIGHT: 51 # this should be enough depth for blue-miner to confirm txn that funds jack and jill
       RED_NODE_URL: "http://red-node:8332"
-    networks:
-      - default
     command: bundle exec ruby find_them_and_destroy_them.rb
 
   red-node:
