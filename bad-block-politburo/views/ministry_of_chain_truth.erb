@@ -1,0 +1,16 @@
+<img src="/glorious_leader_adam_back.jpg">
+<h1>Bunker Mode Control Centre</h1>
+<p><strong>AUTHORIZED ACCESS ONLY:</strong> This control centre is for use by the bad block politburo secretariat only.</p>
+
+<h1>Ban a block</h1>
+<form method="post" action="/blocks">
+  <input name="block_hash" />
+  <button>NOTICE COMRADES, BAN THIS BLOCK UNDER EXECUTIVE ORDER 1337</button>
+</form>
+
+<h1>Banned blocks</h1>
+<ol>
+<% bad_block_list.each do |bad_block| %>
+  <li><%= bad_block %></li>
+<% end %>
+</ol>

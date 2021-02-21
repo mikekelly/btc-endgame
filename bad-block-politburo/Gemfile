@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+gem 'bitcoiner', github: "mikekelly/bitcoiner"
+gem 'pry', '~> 0.13.1'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'thin'
