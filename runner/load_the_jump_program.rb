@@ -50,16 +50,25 @@ amount_to_exchange = (amount_to_remit/100_000).round(8)
 
 puts "Jack and Jill begin happily exchanging bitcoin with each other..."
 loop do
-  puts
+  begin
+    puts
 
-  puts "Jack sending #{amount_to_exchange} to Jill..."
-  jack.send_to(user: jill, amount: amount_to_exchange)
-  puts "Done."
+    puts "Jack sending #{amount_to_exchange} to Jill..."
+    jack.send_to(user: jill, amount: amount_to_exchange)
+    puts "Done."
 
-  puts "Jill sending #{amount_to_exchange} to Jack..."
-  jill.send_to(user: jack, amount: amount_to_exchange)
-  puts "Done."
+    puts "Jill sending #{amount_to_exchange} to Jack..."
+    jill.send_to(user: jack, amount: amount_to_exchange)
+    puts "Done."
 
-  puts "They both wait 10 seconds..."
-  sleep 10
+    puts "They both wait 10 seconds..."
+    sleep 10
+  rescue Bitcoiner::Client::JSONRPCError => e
+    puts "RPC Error:"
+    puts e.message
+    puts "Reloading Jack's wallet"
+    jack.reload_wallet
+    puts "Reloading Jill's wallet"
+    jill.reload_wallet
+  end
 end

@@ -18,6 +18,11 @@ class BitcoinUser
     @address ||= session_wallet.request('getnewaddress')
   end
 
+  def reload_wallet
+    client.request("unloadwallet", session_wallet_name)
+    client.request("loadwallet", session_wallet_name)
+  end
+
   def session_wallet
     if @session_wallet_name.nil?
       @session_wallet_name = SecureRandom.uuid
@@ -40,6 +45,6 @@ class BitcoinUser
     "waswrong"
   end
 
-  attr_reader :name, :node_url
+  attr_reader :name, :node_url, :session_wallet_name
 end
 
