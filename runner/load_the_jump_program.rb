@@ -13,26 +13,34 @@ blue_team = BitcoinUser.new(name: 'blue_team', node_url: blue_node_url, session_
 jack = BitcoinUser.new(name: 'jack', node_url: jack_node_url)
 jill = BitcoinUser.new(name: 'jill', node_url: jill_node_url)
 
+puts "Creating Jack's wallet + address"
 puts "Jack's address for this session: #{jack.address}"
+puts "Creating Jill's wallet + address"
 puts "Jill's address for this session: #{jill.address}"
 
 puts "Waiting for blue team to have funds for Jack and Jill..."
 loop do
   break if blue_team.balance > 0
-  puts "Rechecking blue team balance in 30s..."
-  sleep 30
+  puts "Rechecking blue team balance in 5s..."
+  sleep 5
 end
 
 puts
 
-blue_team_balance = blue_team.balance - 2 # hold 2 BTC back to cover fees
-amount_to_remit = (blue_team_balance/2).round(8)
+number_of_uxtos = 100
 
-puts "Remitting #{amount_to_remit} to Jack..."
-blue_team.send_to(user: jack, amount: amount_to_remit)
+blue_team_balance = blue_team.balance - 2 # hold 2 BTC back to cover fees
+amount_to_remit = (blue_team_balance/2).round(8) / number_of_uxtos
+
+puts "Remitting #{amount_to_remit * number_of_uxtos} to Jack..."
+number_of_uxtos.times do
+  blue_team.send_to(user: jack, amount: amount_to_remit)
+end
 puts "Done."
-puts "Remitting #{amount_to_remit} to Jill..."
-blue_team.send_to(user: jill, amount: amount_to_remit)
+puts "Remitting #{amount_to_remit * number_of_uxtos} to Jill..."
+number_of_uxtos.times do
+  blue_team.send_to(user: jill, amount: amount_to_remit)
+end
 puts "Done"
 
 puts
@@ -61,14 +69,11 @@ loop do
     jill.send_to(user: jack, amount: amount_to_exchange)
     puts "Done."
 
-    puts "They both wait 10 seconds..."
-    sleep 10
   rescue Bitcoiner::Client::JSONRPCError => e
     puts "RPC Error:"
     puts e.message
-    puts "Reloading Jack's wallet"
-    jack.reload_wallet
-    puts "Reloading Jill's wallet"
-    jill.reload_wallet
   end
+
+  puts "They both wait 10 seconds..."
+  sleep 20
 end
