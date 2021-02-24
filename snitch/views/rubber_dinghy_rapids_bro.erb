@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Snitch</title>
+	<!-- stylesheets -->
+</head>
+<body>
+  <pre>
+    Number of finalised transactions since attack started: 0
+    Number of double-spendable transactions trapped in mempool: <%= @mempool_count %>
+    Number of honest blocks orphaned by heavier chain of empty blocks: <%= @orphaned_blocks.count %>
+    Estimated cost to miners of failed defence attempts at today's block reward value: $<%= (@orphaned_blocks.count * 312_500).to_s.gsub(/\d(?=(...)+$)/, '\0,') %> (6.25 BTC @ $50k)
+  </pre>
+<% @block_trees.each do |block_tree| %>
+  <pre>
+<%= block_tree.render %>
+  </pre>
+<% end %>
+</body>
+</html>

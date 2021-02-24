@@ -127,6 +127,17 @@ services:
       - default
       - dmz
 
+  snitch:
+    build: snitch
+    ports:
+      - "4566:4567"
+    volumes:
+      - "./snitch:/usr/src/app"
+    command: bundle exec ruby there_is_no_spoon.rb
+    networks:
+      - default
+      - dmz
+
 networks:
   default:
     internal: true
