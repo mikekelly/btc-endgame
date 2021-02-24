@@ -32,16 +32,12 @@ number_of_uxtos = 100
 blue_team_balance = blue_team.balance - 2 # hold 2 BTC back to cover fees
 amount_to_remit = (blue_team_balance/2).round(8) / number_of_uxtos
 
-puts "Remitting #{amount_to_remit * number_of_uxtos} to Jack..."
+puts "Remitting to Jack and Jill..."
 number_of_uxtos.times do
   blue_team.send_to(user: jack, amount: amount_to_remit)
-end
-puts "Done."
-puts "Remitting #{amount_to_remit * number_of_uxtos} to Jill..."
-number_of_uxtos.times do
   blue_team.send_to(user: jill, amount: amount_to_remit)
 end
-puts "Done"
+puts "Done."
 
 puts
 
