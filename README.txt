@@ -26,8 +26,7 @@ A detailed summary of the attack is here:
 https://joekelly100.medium.com/how-to-kill-bitcoin-part-1-is-bitcoin-unstoppable-code-7a1b366f65ee
 https://joekelly100.medium.com/how-to-kill-bitcoin-part-2-no-can-spend-66e59385a4a5
 
-There is currently no defense for this attack in Bitcoin, as the simulation
-demonstrates.
+There is currently a solid defense for this attack in Bitcoin, as Jimmy Song clearly illustrated.
 
 The idea of this wargame is to challenge others to develop a defense strategy
 against the attack, in response to which further attack strategies can be
