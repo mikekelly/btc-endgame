@@ -26,12 +26,20 @@ A detailed summary of the attack is here:
 https://joekelly100.medium.com/how-to-kill-bitcoin-part-1-is-bitcoin-unstoppable-code-7a1b366f65ee
 https://joekelly100.medium.com/how-to-kill-bitcoin-part-2-no-can-spend-66e59385a4a5
 
-There is currently no defense for this attack in Bitcoin, as the simulation
-demonstrates.
+There is currently no defense for this attack in the Bitcoin protocol itself, as the
+simulation demonstrates.
 
 The idea of this wargame is to challenge others to develop a defense strategy
 against the attack, in response to which further attack strategies can be
 proposed and tested, then a further defense strategy, and so on and so forth.
+
+Bitcoin users can choose to violate the heaviest chain rule and ignore specific
+chains they beleive are nefarious. Bitcoin Core has an RPC endpoint called
+`invalidateblock` for this purpose. An attacker can shape blocks (with bogus transactions)
+in order to make identifying nefarious chains harder for users, creating the risk of
+chainsplits. For this reason, it is likely that mechanisms for coordinating
+invalidateblock between nodes would be necessary. At time of writing, the
+simulated attacker does not bother shaping blocks, mostly to save my time :)
 
 The intent of this work is to research potential ways to make Bitcoin more
 robust under attack, and to identify/discuss where there may be limitations or
