@@ -35,7 +35,7 @@ proposed and tested, then a further defense strategy, and so on and so forth.
 
 Bitcoin users can choose to violate the heaviest chain rule and ignore specific
 chains they beleive are nefarious. Bitcoin Core has an RPC endpoint called
-`invalidateblock` for this purpose. An attacker can shape blocks (with bogus transactions)
+`invalidateblock` for this purpose. An attacker can shape blocks (with their own transactions)
 in order to make identifying nefarious chains harder for users, creating the risk of
 chainsplits. For this reason, it is likely that mechanisms for coordinating
 invalidateblock between nodes would be necessary. At time of writing, the
